@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "26185453497",
+    "project_id": "picknik-d1e7c",
+    "storage_bucket": "picknik-d1e7c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26185453497:android:99cda9666d6e306c8b7068",
+        "android_client_info": {
+          "package_name": "com.rachaelgomez.picknic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "26185453497-9lbcpifp8omacp82vmt8i8rpjd1q40t1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rachaelgomez.picknic",
+            "certificate_hash": "cc7c18f0da168ce9f562a3d48595f3502674ce2d"
+          }
+        },
+        {
+          "client_id": "26185453497-lu8dag9j8pa524oh70k7f0f4h72hpa3h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_c5uA9-WT1YhbtStCwXau9MrWw4NUsiQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "26185453497-lu8dag9j8pa524oh70k7f0f4h72hpa3h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
