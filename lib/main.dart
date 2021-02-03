@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'swipe_page.dart';
+
 
 import 'login_page.dart';
 
@@ -20,7 +22,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      // home: LoginPage(),
+      home: SwipePage(),
     );
   }
 }

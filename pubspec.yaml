@@ -33,9 +33,9 @@ dependencies:
   google_sign_in: ^4.5.9
   flutter_dotenv: ^3.1.0
   dio: ^3.0.10
-  http: ^0.12.2
 
 dev_dependencies:
+  http: ^0.12.2
   flutter_test:
     sdk: flutter
 
