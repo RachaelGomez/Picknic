@@ -7,6 +7,10 @@ class SwipePage extends StatefulWidget {
 
 class _SwipePageState extends State<SwipePage> {
   @override
+  void initState() {
+    var response
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
