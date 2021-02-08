@@ -2,6 +2,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'group.dart';
+
 
 Future<http.Response> createGroup (String uid, String url, groupName) async {
 
@@ -20,4 +22,13 @@ Future<http.Response> createGroup (String uid, String url, groupName) async {
   print("${response.statusCode}");
   print("${response.body}");
   return response;
+}
+
+Future<Group> fetchGroups () async {
+  final response = await http.get('http://localhost:3000/groups');
+  if (response.statusCode == 200) {
+    return Group.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to load groups');
+  }
 }
