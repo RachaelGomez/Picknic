@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'first_screen.dart';
 import 'sign_in.dart';
 import 'package:picknic/sign_in.dart';
+import 'Constants/strings.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -35,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
       splashColor: Colors.grey,
       onPressed: () {
         signInWithGoogle().whenComplete(() {
-          checkUser(uid, url)
+          // checkUser(uid, Strings.localHostUrl);
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {

@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'Constants/strings.dart';
 
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -14,6 +15,34 @@ String name;
 String email;
 String imageUrl;
 String uid;
+
+Future<http.Response> createUser (String uid, String url) async {
+
+  Map data = {
+    'google_id': uid
+  };
+  //encode Map to JSON
+  var body = json.encode(data);
+
+  var response = await http.post('http://$url/users',
+      headers: {"Content-Type": "application/json"},
+      body: body
+  );
+  print("${response.statusCode}");
+  print("${response.body}");
+  return response;
+}
+
+Future checkUser(String uid, url) async {
+  var response = await http.get(Uri.http(url, '/users/${uid}'
+  ));
+
+  print("${response.statusCode}");
+  print("${response.body}");
+  if (response.statusCode != 200) {
+    createUser(uid, url);
+  }
+}
 
 Future<String> signInWithGoogle() async {
   await Firebase.initializeApp();
@@ -43,6 +72,8 @@ Future<String> signInWithGoogle() async {
     imageUrl = user.photoURL;
     uid = user.uid;
 
+    createUser(uid, 'localhost:3000');
+
     // Only taking the first part of the name, i.e., First Name
     if (name.contains(" ")) {
       name = name.substring(0, name.indexOf(" "));
@@ -68,31 +99,7 @@ Future<void> signOutGoogle() async {
   print("User Signed Out");
 }
 
-Future<http.Response> checkUser(String uid, String url) async {
-  var response = await http.get(Uri.https(url, '/users/${uid}'
-  ));
 
-  print("${response.statusCode}");
-  print("${response.body}");
-  if (response.statusCode != 200) {
-    createUser(uid, url);
-  }
-}
 
-Future<http.Response> createUser (String uid, String url) async {
 
-  Map data = {
-    'google_id': uid
-  };
-  //encode Map to JSON
-  var body = json.encode(data);
-
-  var response = await http.post(url,
-      headers: {"Content-Type": "application/json"},
-      body: body
-  );
-  print("${response.statusCode}");
-  print("${response.body}");
-  return response;
-}
 
