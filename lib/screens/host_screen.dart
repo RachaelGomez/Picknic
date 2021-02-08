@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:picknic/group_calls.dart';
-import 'package:picknic/login_page.dart';
+import '../group_calls.dart';
 import 'package:picknic/sign_in.dart';
-import 'package:random_string/random_string.dart';
-import 'dart:math';
-import 'Constants/strings.dart';
-import 'screens/host_screen.dart';
+import 'package:picknic/group_calls.dart';
+import '../first_screen.dart';
+import 'package:picknic/first_screen.dart';
+import 'package:picknic/login_page.dart';
 
-class FirstScreen extends StatelessWidget {
+class HostScreen extends StatelessWidget {
+  final String text;
+  HostScreen({Key key, @required this.text}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,13 +25,6 @@ class FirstScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                  imageUrl,
-                ),
-                radius: 60,
-                backgroundColor: Colors.transparent,
-              ),
               SizedBox(height: 40),
               Text(
                 'NAME',
@@ -48,45 +42,18 @@ class FirstScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Text(
-                'EMAIL',
+                'GROUP CODE',
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Colors.black54),
               ),
               Text(
-                email,
+                text,
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              RaisedButton(
-                onPressed: () {
-                  String groupName = randomAlphaNumeric(4);
-                  createGroup(uid, Strings.localHostUrl, groupName);
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return HostScreen(text: groupName);
-                      },
-                    ),
-                  );
-                },
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Create a Picknic',
-                    style: TextStyle(fontSize: 25, color: Colors.red[700]),
-                  ),
-                ),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40)),
               ),
               SizedBox(
                 height: 40,
@@ -97,7 +64,7 @@ class FirstScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Join a Picknic',
+                    'Start the Picnic!',
                     style: TextStyle(fontSize: 25, color: Colors.red[700]),
                   ),
                 ),
@@ -105,14 +72,17 @@ class FirstScreen extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40)),
               ),
+              SizedBox(
+                height: 40,
+              ),
               SizedBox(height: 40),
               RaisedButton(
                 onPressed: () {
                   signOutGoogle();
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) {
-                    return LoginPage();
-                  }), ModalRoute.withName('/'));
+                        return LoginPage();
+                      }), ModalRoute.withName('/'));
                 },
                 color: Colors.white,
                 child: Padding(
