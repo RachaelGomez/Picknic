@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'first_screen.dart';
 import 'sign_in.dart';
+import 'package:picknic/sign_in.dart';
+import 'Constants/strings.dart';
 
 
 class LoginPage extends StatefulWidget {
