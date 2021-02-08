@@ -33,16 +33,16 @@ Future<http.Response> createUser (String uid, String url) async {
   return response;
 }
 
-Future checkUser(String uid, url) async {
-  var response = await http.get(Uri.http(url, '/users/${uid}'
-  ));
-
-  print("${response.statusCode}");
-  print("${response.body}");
-  if (response.statusCode != 200) {
-    createUser(uid, url);
-  }
-}
+// Future checkUser(String uid, url) async {
+//   var response = await http.get(Uri.http(url, '/users/${uid}'
+//   ));
+//
+//   print("${response.statusCode}");
+//   print("${response.body}");
+//   if (response.statusCode != 200) {
+//     createUser(uid, url);
+//   }
+// }
 
 Future<String> signInWithGoogle() async {
   await Firebase.initializeApp();
@@ -71,6 +71,8 @@ Future<String> signInWithGoogle() async {
     email = user.email;
     imageUrl = user.photoURL;
     uid = user.uid;
+
+    // createUser(uid, 'localhost:3000');
 
     createUser(uid, 'localhost:3000');
 

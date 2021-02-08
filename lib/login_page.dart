@@ -36,7 +36,6 @@ class _LoginPageState extends State<LoginPage> {
       splashColor: Colors.grey,
       onPressed: () {
         signInWithGoogle().whenComplete(() {
-          // checkUser(uid, Strings.localHostUrl);
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {
