@@ -16,10 +16,11 @@ String email;
 String imageUrl;
 String uid;
 
-Future<http.Response> createUser (String uid, String url) async {
+Future<http.Response> createUser (String uid, String url, String name) async {
 
   Map data = {
-    'google_id': uid
+    'google_id': uid,
+    'name' : name
   };
   //encode Map to JSON
   var body = json.encode(data);
@@ -74,7 +75,7 @@ Future<String> signInWithGoogle() async {
 
     // createUser(uid, 'localhost:3000');
 
-    createUser(uid, 'localhost:3000');
+    createUser(uid, 'localhost:3000', name);
 
     // Only taking the first part of the name, i.e., First Name
     if (name.contains(" ")) {
