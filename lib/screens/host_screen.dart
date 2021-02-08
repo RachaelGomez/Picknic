@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import '../group_calls.dart';
 import 'package:picknic/sign_in.dart';
 import 'package:picknic/group_calls.dart';
+import '../first_screen.dart';
+import 'package:picknic/first_screen.dart';
+import 'package:picknic/login_page.dart';
 
 class HostScreen extends StatelessWidget {
+  final String text;
+  HostScreen({Key key, @required this.text}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +49,7 @@ class HostScreen extends StatelessWidget {
                     color: Colors.black54),
               ),
               Text(
-                groupName,
+                text,
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.white,
@@ -59,7 +64,7 @@ class HostScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Create a Picknic',
+                    'Start the Picnic!',
                     style: TextStyle(fontSize: 25, color: Colors.red[700]),
                   ),
                 ),
@@ -69,20 +74,6 @@ class HostScreen extends StatelessWidget {
               ),
               SizedBox(
                 height: 40,
-              ),
-              RaisedButton(
-                onPressed: () {},
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Join a Picknic',
-                    style: TextStyle(fontSize: 25, color: Colors.red[700]),
-                  ),
-                ),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40)),
               ),
               SizedBox(height: 40),
               RaisedButton(
