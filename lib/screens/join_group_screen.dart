@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:picknic/network_helper.dart';
-import 'package:picknic/models.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 
 class JoinGroupScreen extends StatefulWidget {
@@ -9,89 +9,89 @@ class JoinGroupScreen extends StatefulWidget {
 }
 
 class _JoinGroupScreenState extends State<JoinGroupScreen> {
+  List groups = [];
+  bool isLoading = false;
+  @override
+  void initState() {
+    super.initState();
+    this.fetchGroup();
+  }
+
+  fetchGroup() async {
+    setState(() {
+      isLoading = true;
+    });
+    var url = "http://localhost:3000/groups";
+    var response = await http.get(url);
+
+    if(response.statusCode == 200) {
+      var items = json.decode(response.body);
+      setState(() {
+        groups = items;
+        isLoading = false;
+      });
+    } else {
+      groups = [];
+      isLoading = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.red[800], Colors.red[400]]
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
+      body: getBody(),
+    );
+  }
+  Widget getBody() {
+    if(groups.contains(null) || groups.length < 0 || isLoading) {
+      return Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation(Colors.black)));
+    }
+    return ListView.builder(
+      itemCount: groups.length,
+      itemBuilder: (context, index) {
+        return getCard(groups[index]);
+    });
+  }
+  Widget getCard(item) {
+    var groupName = item['group_name'];
+    var hostId = item['host_id'];
+    return Card(
+      elevation: 1.5,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ListTile(
+          title: Row(
             children: <Widget>[
-              SizedBox(height: 40),
-              Text(
-                'NAME',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(60 / 2),
                 ),
               ),
-              // RaisedButton(
-              //   onPressed: () {},color: Colors.white,
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(8.0),
-              //     child: Text(
-              //       'Sign Out',
-              //       style: TextStyle(fontSize: 25, color: Colors.red[700]),
-              //     ),
-              //   ),
-              //   elevation: 5,
-              //   shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(40)),
-
-              //)
-              Center(
-                child: _groupsData()
-              )
-            ]
+              SizedBox(width: 20,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width - 140,
+                      child: Text(groupName, style: TextStyle(fontSize: 17),)),
+                  SizedBox(height: 10,),
+                  Text(hostId, style: TextStyle(color: Colors.grey),)
+                ],
+              ),
+            ],
           ),
         ),
-      )
+      ),
     );
   }
 }
 
-FutureBuilder _groupsData() {
-  return FutureBuilder<List<Groups>>(
-    future: GetGroup().getGroups(),
-    builder: (BuildContext context, AsyncSnapshot<List<Groups>> snapshot) {
-      if (snapshot.hasData) {
-        List<Groups> data = snapshot.data;
-        return _groups(data);
-      } else if (snapshot.hasError) {
-        return Text("${snapshot.error}");
-      }
-      return CircularProgressIndicator();
-    }
-  );
-}
 
-ListView _groups(data) {
-  return ListView.builder(
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        return Card(
-            child: _tile(data[index].groupId, data[index].hostId)
-        );
-      }
-  );
-}
 
-ListTile _tile(String groupId, String hostId) {
-  return ListTile(
-    title: Text(groupId,
-        style: TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
-        )),
-    subtitle: Text(hostId),
-  );
-}
+
