@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+
 Future<http.Response> updateUser (String uid, String url, groupName) async {
 
 
@@ -22,6 +23,7 @@ Future<http.Response> updateUser (String uid, String url, groupName) async {
   print("${response.body}");
   return response;
 }
+
 
 Future<http.Response> createGroup (String uid, String url, groupName) async {
 
