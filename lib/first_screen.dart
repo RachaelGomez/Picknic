@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:picknic/group_calls.dart';
 import 'package:picknic/login_page.dart';
-import 'package:picknic/screens/join_group_screen.dart';
+import 'screens/join_group_screen.dart';
 import 'package:picknic/sign_in.dart';
 import 'package:random_string/random_string.dart';
 import 'dart:math';

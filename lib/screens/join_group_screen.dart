@@ -48,11 +48,11 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
               //       borderRadius: BorderRadius.circular(40)),
 
               //)
-
+              Center(
+                child: _groupsData()
+              )
             ]
           ),
-          child: _groupsData();
-
         ),
       )
     );
@@ -79,23 +79,19 @@ ListView _groups(data) {
       itemCount: data.length,
       itemBuilder: (context, index) {
         return Card(
-            child: _tile(data[index].employeeName, data[index].employeeSalary, Icons.work)
+            child: _tile(data[index].groupId, data[index].hostId)
         );
       }
   );
 }
 
-ListTile _tile(String title, String subtitle, IconData icon) {
+ListTile _tile(String groupId, String hostId) {
   return ListTile(
-    title: Text(title,
+    title: Text(groupId,
         style: TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 20,
         )),
-    subtitle: Text(subtitle),
-    leading: Icon(
-      icon,
-      color: Colors.blue[500],
-    ),
+    subtitle: Text(hostId),
   );
 }

@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'models.dart';
 
-const url = "localhost:3000/groups";
+const url = "http://localhost:3000/groups";
 
 class GetGroup {
   String getPath() {
