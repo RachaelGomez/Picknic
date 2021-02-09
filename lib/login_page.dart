@@ -21,7 +21,13 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FlutterLogo(size: 150),
+              Text(
+                "Let's have a Picknic",
+                    style: TextStyle(
+                      fontSize: 35,
+                       color: Colors.red[800]
+                    ),
+              ),
               SizedBox(height: 50),
               _signInButton(),
             ],
@@ -33,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _signInButton() {
     return OutlineButton(
-      splashColor: Colors.grey,
+      splashColor: Colors.red[800],
       onPressed: () {
         signInWithGoogle().whenComplete(() {
           Navigator.of(context).push(
@@ -47,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
-      borderSide: BorderSide(color: Colors.grey),
+      borderSide: BorderSide(color: Colors.red[800]),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
         child: Row(
@@ -61,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                 'Sign in with Google',
                 style: TextStyle(
                   fontSize: 20,
-                  color: Colors.grey,
+                  color: Colors.red[800],
                 ),
               ),
             )

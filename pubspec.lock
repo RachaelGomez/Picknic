@@ -140,7 +140,9 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
+
     version: "1.15.0-nullsafety.5"
+
   convert:
     dependency: transitive
     description:
@@ -149,7 +151,9 @@ packages:
     source: hosted
     version: "2.1.1"
   crypto:
+
     dependency: transitive
+
     description:
       name: crypto
       url: "https://pub.dartlang.org"
@@ -247,6 +251,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  geopattern_flutter:
+    dependency: "direct main"
+    description:
+      name: geopattern_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   glob:
     dependency: transitive
     description:

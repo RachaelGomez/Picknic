@@ -4,6 +4,27 @@ import 'dart:async';
 import 'dart:convert';
 
 
+Future<http.Response> updateUser (String uid, String url, groupName) async {
+
+
+  Map data = {
+
+    'group_name': groupName
+
+  };
+  //encode Map to JSON
+  var body = json.encode(data);
+
+  var response = await http.patch('http://$url/users/$uid',
+      headers: {"Content-Type": "application/json"},
+      body: body
+  );
+  print("${response.statusCode}");
+  print("${response.body}");
+  return response;
+}
+
+
 Future<http.Response> createGroup (String uid, String url, groupName) async {
 
 
@@ -18,6 +39,9 @@ Future<http.Response> createGroup (String uid, String url, groupName) async {
       headers: {"Content-Type": "application/json"},
       body: body
   );
+
+  updateUser(uid, url, groupName);
+
   print("${response.statusCode}");
   print("${response.body}");
   return response;
