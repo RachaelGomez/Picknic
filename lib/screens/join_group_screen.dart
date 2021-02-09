@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import '../group_calls.dart';
-import 'package:picknic/sign_in.dart';
-import 'package:picknic/group_calls.dart';
-import '../first_screen.dart';
-import 'package:picknic/first_screen.dart';
-import 'package:picknic/login_page.dart';
+import 'package:picknic/network_helper.dart';
+import 'package:picknic/models.dart';
+
 
 class JoinGroupScreen extends StatefulWidget {
   @override
@@ -20,7 +17,7 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.red[800], Colors.red[400]],
+            colors: [Colors.red[800], Colors.red[400]]
           ),
         ),
         child: Center(
@@ -32,77 +29,73 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
               Text(
                 'NAME',
                 style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
-              ),
-              Text(
-                name,
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'GROUP CODE',
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
-              ),
-              Text(
-                text,
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              RaisedButton(
-                onPressed: () {},
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Start the Picnic!',
-                    style: TextStyle(fontSize: 25, color: Colors.red[700]),
-                  ),
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black54
                 ),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40)),
               ),
-              SizedBox(
-                height: 40,
-              ),
-              SizedBox(height: 40),
-              RaisedButton(
-                onPressed: () {
-                  signOutGoogle();
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) {
-                        return LoginPage();
-                      }), ModalRoute.withName('/'));
-                },
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Sign Out',
-                    style: TextStyle(fontSize: 25, color: Colors.red[700]),
-                  ),
-                ),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40)),
-              )
-            ],
+              // RaisedButton(
+              //   onPressed: () {},color: Colors.white,
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: Text(
+              //       'Sign Out',
+              //       style: TextStyle(fontSize: 25, color: Colors.red[700]),
+              //     ),
+              //   ),
+              //   elevation: 5,
+              //   shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(40)),
+
+              //)
+
+            ]
           ),
+          child: _groupsData();
+
         ),
-      ),
+      )
     );
   }
+}
+
+FutureBuilder _groupsData() {
+  return FutureBuilder<List<Groups>>(
+    future: GetGroup().getGroups(),
+    builder: (BuildContext context, AsyncSnapshot<List<Groups>> snapshot) {
+      if (snapshot.hasData) {
+        List<Groups> data = snapshot.data;
+        return _groups(data);
+      } else if (snapshot.hasError) {
+        return Text("${snapshot.error}");
+      }
+      return CircularProgressIndicator();
+    }
+  );
+}
+
+ListView _groups(data) {
+  return ListView.builder(
+      itemCount: data.length,
+      itemBuilder: (context, index) {
+        return Card(
+            child: _tile(data[index].employeeName, data[index].employeeSalary, Icons.work)
+        );
+      }
+  );
+}
+
+ListTile _tile(String title, String subtitle, IconData icon) {
+  return ListTile(
+    title: Text(title,
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+        )),
+    subtitle: Text(subtitle),
+    leading: Icon(
+      icon,
+      color: Colors.blue[500],
+    ),
+  );
 }

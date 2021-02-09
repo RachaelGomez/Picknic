@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:picknic/group_calls.dart';
 import 'package:picknic/login_page.dart';
+import 'package:picknic/screens/join_group_screen.dart';
 import 'package:picknic/sign_in.dart';
 import 'package:random_string/random_string.dart';
 import 'dart:math';
@@ -92,7 +93,14 @@ class FirstScreen extends StatelessWidget {
                 height: 40,
               ),
               RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) {
+                          return JoinGroupScreen();
+                        })
+                  );
+                },
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
