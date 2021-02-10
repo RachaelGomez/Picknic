@@ -44,21 +44,21 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Join a Group'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.home),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return FirstScreen();
-                  },
-                ),
-              );
-            },
-          )
-        ]
+          title: const Text('Group Created!'),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return FirstScreen();
+                    },
+                  ),
+                );
+              },
+            )
+          ]
       ),
       body: getBody(),
     );
@@ -68,14 +68,14 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
       return Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation(Colors.black)));
     }
     return ListView.builder(
-      itemCount: groups.length,
-      itemBuilder: (context, index) {
-        return getCard(groups[index]);
-    });
+        itemCount: groups.length,
+        itemBuilder: (context, index) {
+          return getCard(groups[index]);
+        });
   }
   Widget getCard(item) {
     var groupName = item['group_name'];
-    var hostId = item['host_id'];
+    var hostName = item['host_name'];
     return Card(
       elevation: 1.5,
       child: Padding(
@@ -102,11 +102,20 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
                           .width - 140,
                       child: Text(groupName, style: TextStyle(fontSize: 17),)),
                   SizedBox(height: 10,),
-                  Text(hostId, style: TextStyle(color: Colors.grey),),
+                  Text("Host: $hostName", style: TextStyle(color: Colors.grey),),
                   RaisedButton(
                       onPressed: () {
                         updateUser(uid, Strings.localHostUrl, groupName);
-                      }),
+                      },
+                  color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Join Group',
+                        style: TextStyle(fontSize: 25, color: Colors.red[700]),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -116,7 +125,3 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
     );
   }
 }
-
-
-
-

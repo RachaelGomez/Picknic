@@ -24,12 +24,13 @@ Future<http.Response> updateUser (String uid, String url, groupName) async {
 }
 
 
-Future<http.Response> createGroup (String uid, String url, groupName) async {
+Future<http.Response> createGroup (String uid, String url, groupName, String name) async {
 
 
   Map data = {
     'host_id': uid,
-    'group_name': groupName
+    'group_name': groupName,
+    'host_name': name
   };
   //encode Map to JSON
   var body = json.encode(data);
