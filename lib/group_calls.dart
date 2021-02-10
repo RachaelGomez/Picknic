@@ -40,9 +40,9 @@ Future<http.Response> createGroup (String uid, String url, groupName) async {
       body: body
   );
 
-  updateUser(uid, url, groupName);
+  return updateUser(uid, url, groupName);
 
-  print("${response.statusCode}");
-  print("${response.body}");
-  return response;
+  // print("${response.statusCode}");
+  // print("${response.body}");
+  // return response;
 }

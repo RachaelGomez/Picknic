@@ -11,15 +11,15 @@ import 'dart:convert';
 
 class HostScreen extends StatefulWidget {
   final String text;
-  const HostScreen({Key key, this.text}) : super(key: key);
+  final Future<http.Response> futureGroup;
+  const HostScreen({Key key, this.text, this.futureGroup}) : super(key: key);
   @override
   _HostScreenState createState() => _HostScreenState();
 }
 
 class _HostScreenState extends State<HostScreen> {
   List membersArray = [];
-  List members = [];
-  bool isLoading = false;
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -30,6 +30,7 @@ class _HostScreenState extends State<HostScreen> {
     setState(() {
       isLoading = true;
     });
+    await widget.futureGroup;
     var url = "http://localhost:3000/groups/$groupName/members";
     var response = await http.get(url);
 
@@ -39,10 +40,9 @@ class _HostScreenState extends State<HostScreen> {
         membersArray = items;
         isLoading = false;
         print(membersArray);
-
       });
     } else {
-      members = [];
+      membersArray = [];
       isLoading = false;
     }
   }
@@ -134,7 +134,9 @@ class _HostScreenState extends State<HostScreen> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40)),
               ),
-              SizedBox(height: 40,),
+              SizedBox(
+                height: 100,
+              ),
               getBody()
             ],
           ),
@@ -144,16 +146,20 @@ class _HostScreenState extends State<HostScreen> {
   }
 
   Widget getBody() {
-    if (membersArray.contains(null) || membersArray.length < 0 || isLoading) {
+    if (membersArray.length == 0 || isLoading) {
       return Center(
           child: CircularProgressIndicator(
               valueColor: new AlwaysStoppedAnimation(Colors.black)));
     }
-    return ListView.builder(
+    // return Center(child: Text(membersArray[0]["name"]));
+    return Expanded(
+      child: ListView.builder(
         itemCount: membersArray.length,
         itemBuilder: (context, index) {
           return getCard(membersArray[index]);
-        });
+        },
+      ),
+    );
   }
 
   Widget getCard(item) {

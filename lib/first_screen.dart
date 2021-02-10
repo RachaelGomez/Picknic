@@ -68,11 +68,11 @@ class FirstScreen extends StatelessWidget {
               RaisedButton(
                 onPressed: () {
                   String groupName = randomAlphaNumeric(4);
-                  createGroup(uid, Strings.localHostUrl, groupName);
+                 var future = createGroup(uid, Strings.localHostUrl, groupName);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return HostScreen(text: groupName);
+                        return HostScreen(text: groupName, futureGroup: future);
                       },
                     ),
                   );
