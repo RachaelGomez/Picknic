@@ -50,6 +50,23 @@ class _HostScreenState extends State<HostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          title: const Text('Join a Group'),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return FirstScreen();
+                    },
+                  ),
+                );
+              },
+            )
+          ]
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
