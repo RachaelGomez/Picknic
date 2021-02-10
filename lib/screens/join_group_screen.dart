@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:picknic/Constants/strings.dart';
+import 'package:picknic/first_screen.dart';
+import 'package:picknic/group_calls.dart';
+import 'package:picknic/sign_in.dart';
 
 
 class JoinGroupScreen extends StatefulWidget {
@@ -39,6 +43,23 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Join a Group'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return FirstScreen();
+                  },
+                ),
+              );
+            },
+          )
+        ]
+      ),
       body: getBody(),
     );
   }
@@ -81,7 +102,11 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
                           .width - 140,
                       child: Text(groupName, style: TextStyle(fontSize: 17),)),
                   SizedBox(height: 10,),
-                  Text(hostId, style: TextStyle(color: Colors.grey),)
+                  Text(hostId, style: TextStyle(color: Colors.grey),),
+                  RaisedButton(
+                      onPressed: () {
+                        updateUser(uid, Strings.localHostUrl, groupName);
+                      }),
                 ],
               ),
             ],

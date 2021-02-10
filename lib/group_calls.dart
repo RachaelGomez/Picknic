@@ -6,7 +6,6 @@ import 'dart:convert';
 
 Future<http.Response> updateUser (String uid, String url, groupName) async {
 
-
   Map data = {
 
     'group_name': groupName
