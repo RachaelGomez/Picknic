@@ -68,11 +68,11 @@ class FirstScreen extends StatelessWidget {
               RaisedButton(
                 onPressed: () {
                   String groupName = randomAlphaNumeric(4);
-                  createGroup(uid, Strings.localHostUrl, groupName);
+                 var future = createGroup(uid, Strings.localHostUrl, groupName);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return HostScreen(text: groupName);
+                        return HostScreen(text: groupName, futureGroup: future);
                       },
                     ),
                   );
@@ -96,9 +96,10 @@ class FirstScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                        builder: (context) {
-                          return JoinGroupScreen();
-                        })
+                      builder: (context) {
+                        return JoinGroupScreen();
+                      },
+                    ),
                   );
                 },
                 color: Colors.white,
@@ -117,10 +118,11 @@ class FirstScreen extends StatelessWidget {
               RaisedButton(
                 onPressed: () {
                   signOutGoogle();
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) {
-                    return LoginPage();
-                  }), ModalRoute.withName('/'));
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                    builder: (context) {
+                      return LoginPage();
+                    },
+                  ), ModalRoute.withName('/'));
                 },
                 color: Colors.white,
                 child: Padding(
