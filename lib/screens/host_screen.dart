@@ -136,8 +136,8 @@ class _HostScreenState extends State<HostScreen> {
                   signOutGoogle();
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) {
-                    return LoginPage();
-                  }), ModalRoute.withName('/'));
+                        return LoginPage();
+                      }), ModalRoute.withName('/'));
                 },
                 color: Colors.white,
                 child: Padding(
