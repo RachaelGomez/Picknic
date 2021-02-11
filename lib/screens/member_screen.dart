@@ -9,15 +9,15 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class HostScreen extends StatefulWidget {
+class MemberScreen extends StatefulWidget {
   final String text;
   final Future<http.Response> futureGroup;
-  const HostScreen({Key key, this.text, this.futureGroup}) : super(key: key);
+  const MemberScreen({Key key, this.text, this.futureGroup}) : super(key: key);
   @override
-  _HostScreenState createState() => _HostScreenState();
+  _MemberScreenState createState() => _MemberScreenState();
 }
 
-class _HostScreenState extends State<HostScreen> {
+class _MemberScreenState extends State<MemberScreen> {
   List membersArray = [];
   bool isLoading = true;
   @override
@@ -50,23 +50,20 @@ class _HostScreenState extends State<HostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text('Group Created!'),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.home),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return FirstScreen();
-                    },
-                  ),
-                );
-              },
-            )
-          ]
-      ),
+      appBar: AppBar(title: const Text('Picnic Waiting Room'), actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.home),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return FirstScreen();
+                },
+              ),
+            );
+          },
+        ),
+      ]),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -82,14 +79,14 @@ class _HostScreenState extends State<HostScreen> {
             children: <Widget>[
               SizedBox(height: 40),
               Text(
-                'NAME',
+                'Host',
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Colors.black54),
               ),
               Text(
-                name,
+                widget.group["host_name"],
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.white,
