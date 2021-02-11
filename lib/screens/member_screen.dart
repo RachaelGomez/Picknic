@@ -8,11 +8,14 @@ import 'package:picknic/login_page.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:picknic/group_calls.dart';
 
 class MemberScreen extends StatefulWidget {
-  final String text;
-  final Future<http.Response> futureGroup;
-  const MemberScreen({Key key, this.text, this.futureGroup}) : super(key: key);
+  final String groupName;
+  final String hostName;
+
+  final Future<http.Response> futureUpdate;
+  const MemberScreen({Key key, this.groupName, this.hostName, this.futureUpdate}) : super(key: key);
   @override
   _MemberScreenState createState() => _MemberScreenState();
 }
@@ -23,14 +26,14 @@ class _MemberScreenState extends State<MemberScreen> {
   @override
   void initState() {
     super.initState();
-    this.fetchMembers(widget.text);
+    this.fetchMembers(widget.groupName);
   }
 
   fetchMembers(groupName) async {
     setState(() {
       isLoading = true;
     });
-    await widget.futureGroup;
+    await widget.futureUpdate;
     var url = "http://localhost:3000/groups/$groupName/members";
     var response = await http.get(url);
 
@@ -46,6 +49,8 @@ class _MemberScreenState extends State<MemberScreen> {
       isLoading = false;
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +91,7 @@ class _MemberScreenState extends State<MemberScreen> {
                     color: Colors.black54),
               ),
               Text(
-                widget.group["host_name"],
+                  widget.hostName,
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.white,
@@ -101,7 +106,7 @@ class _MemberScreenState extends State<MemberScreen> {
                     color: Colors.black54),
               ),
               Text(
-                widget.text,
+                widget.groupName,
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.white,
@@ -110,23 +115,23 @@ class _MemberScreenState extends State<MemberScreen> {
               SizedBox(
                 height: 40,
               ),
-              RaisedButton(
-                onPressed: () {},
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Start the Picnic!',
-                    style: TextStyle(fontSize: 25, color: Colors.red[700]),
-                  ),
-                ),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40)),
-              ),
-              SizedBox(
-                height: 40,
-              ),
+              // RaisedButton(
+              //   onPressed: () {},
+              //   color: Colors.white,
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: Text(
+              //       'Start the Picnic!',
+              //       style: TextStyle(fontSize: 25, color: Colors.red[700]),
+              //     ),
+              //   ),
+              //   elevation: 5,
+              //   shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(40)),
+              // ),
+              // SizedBox(
+              //   height: 40,
+              // ),
               Text(
                 "Refresh List",
                 style: TextStyle(
@@ -138,7 +143,7 @@ class _MemberScreenState extends State<MemberScreen> {
                 height: 15,
               ),
               RaisedButton(
-                onPressed: () => setState(() => fetchMembers(widget.text)),
+                onPressed: () => setState(() => fetchMembers(widget.groupName)),
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

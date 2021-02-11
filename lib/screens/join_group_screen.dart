@@ -5,6 +5,8 @@ import 'package:picknic/Constants/strings.dart';
 import 'package:picknic/first_screen.dart';
 import 'package:picknic/group_calls.dart';
 import 'package:picknic/sign_in.dart';
+import 'member_screen.dart';
+
 
 
 class JoinGroupScreen extends StatefulWidget {
@@ -105,7 +107,14 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
                   Text("Host: $hostName", style: TextStyle(color: Colors.grey),),
                   RaisedButton(
                       onPressed: () {
-                        updateUser(uid, Strings.localHostUrl, groupName);
+                        var futureUpdate = updateUser(uid, Strings.localHostUrl, groupName);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return MemberScreen(groupName: groupName, hostName: hostName, futureUpdate: futureUpdate,);
+                            },
+                          ),
+                        );
                       },
                   color: Colors.white,
                     child: Padding(
@@ -113,6 +122,7 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
                       child: Text(
                         'Join Group',
                         style: TextStyle(fontSize: 25, color: Colors.red[700]),
+
                       ),
                     ),
                   ),

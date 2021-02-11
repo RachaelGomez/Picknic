@@ -57,8 +57,9 @@ Future<http.Response> fetchCurrentGroup (String groupName, String url) async {
 
   var response = await http.get('http://$url/groups/$groupName',
       headers: {"Content-Type": "application/json"},
-      body: body
   );
 
-  return updateUser(uid, url, groupName);
+  print("${response.statusCode}");
+  print("${response.body}");
+  return response;
 }
