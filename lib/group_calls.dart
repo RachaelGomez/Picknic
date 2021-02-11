@@ -42,9 +42,9 @@ Future<http.Response> createGroup (String uid, String url, groupName, String nam
       body: body
   );
 
-  String groupId = groupName['id'];
+  // String groupId = groupName['id'];
 
-  createRestaurants(url, groupId);
+  // createRestaurants(url, groupId);
   return updateUser(uid, url, groupName);
 
   // print("${response.statusCode}");
@@ -52,18 +52,17 @@ Future<http.Response> createGroup (String uid, String url, groupName, String nam
   // return response;
 }
 
-// Future<http.Response> fetchCurrentGroup (String groupName, String url) async {
-//
-//   Map data = {
-//     'group_name': groupName,
-//   };
-//   //encode Map to JSON
-//   var body = json.encode(data);
-//
-//   var response = await http.get('http://$url/groups/$groupName',
-//       headers: {"Content-Type": "application/json"},
-//       body: body
-//   );
-//
-//   return updateUser(uid, url, groupName);
-// }
+Future<http.Response> fetchCurrentGroup (String groupName, String url) async {
+
+  Map data = {
+    'group_name': groupName,
+  };
+  //encode Map to JSON
+  var body = json.encode(data);
+
+  var response = await http.get('http://$url/groups/$groupName',
+      headers: {"Content-Type": "application/json"},
+  );
+
+  return response;
+}
