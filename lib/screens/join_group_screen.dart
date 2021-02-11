@@ -44,7 +44,7 @@ class _JoinGroupScreenState extends State<JoinGroupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Group Created!'),
+          title: const Text('Join group'),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.home),
