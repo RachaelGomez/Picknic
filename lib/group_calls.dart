@@ -46,3 +46,19 @@ Future<http.Response> createGroup (String uid, String url, groupName, String nam
   // print("${response.body}");
   // return response;
 }
+
+Future<http.Response> fetchCurrentGroup (String groupName, String url) async {
+
+  Map data = {
+    'group_name': groupName,
+  };
+  //encode Map to JSON
+  var body = json.encode(data);
+
+  var response = await http.get('http://$url/groups/$groupName',
+      headers: {"Content-Type": "application/json"},
+      body: body
+  );
+
+  return updateUser(uid, url, groupName);
+}
