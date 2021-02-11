@@ -64,5 +64,9 @@ Future<http.Response> fetchCurrentGroup (String groupName, String url) async {
       headers: {"Content-Type": "application/json"},
   );
 
+
+  print("${response.statusCode}");
+  print("${response.body}");
+
   return response;
 }
