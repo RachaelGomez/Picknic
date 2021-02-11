@@ -51,7 +51,7 @@ class _HostScreenState extends State<HostScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Join a Group'),
+          title: const Text('Group Created!'),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.home),
