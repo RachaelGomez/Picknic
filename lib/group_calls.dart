@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:picknic/restaurant_calls.dart';
+
 
 Future<http.Response> updateUser (String uid, String url, groupName) async {
 
@@ -40,6 +42,9 @@ Future<http.Response> createGroup (String uid, String url, groupName, String nam
       body: body
   );
 
+  // String groupId = groupName['id'];
+
+  // createRestaurants(url, groupId);
   return updateUser(uid, url, groupName);
 
   // print("${response.statusCode}");
@@ -57,8 +62,7 @@ Future<http.Response> fetchCurrentGroup (String groupName, String url) async {
 
   var response = await http.get('http://$url/groups/$groupName',
       headers: {"Content-Type": "application/json"},
-      body: body
   );
 
-  return updateUser(uid, url, groupName);
+  return response;
 }
