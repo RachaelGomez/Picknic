@@ -119,7 +119,7 @@ class _HostScreenState extends State<HostScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Start the Picnic!',
+                    'Start the Picknic!',
                     style: TextStyle(fontSize: 25, color: Colors.red[700]),
                   ),
                 ),
