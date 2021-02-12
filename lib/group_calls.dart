@@ -60,7 +60,7 @@ Future<http.Response> fetchCurrentGroup (String groupName, String url) async {
   //encode Map to JSON
   var body = json.encode(data);
 
-  var response = await http.get('http://$url/groups/$groupName',
+  var response = await http.get('http://localhost:3000/groups/$groupName',
       headers: {"Content-Type": "application/json"},
   );
 
