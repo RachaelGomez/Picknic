@@ -15,7 +15,9 @@ class MemberScreen extends StatefulWidget {
   final String hostName;
 
   final Future<http.Response> futureUpdate;
-  const MemberScreen({Key key, this.groupName, this.hostName, this.futureUpdate}) : super(key: key);
+  const MemberScreen(
+      {Key key, this.groupName, this.hostName, this.futureUpdate})
+      : super(key: key);
   @override
   _MemberScreenState createState() => _MemberScreenState();
 }
@@ -23,10 +25,12 @@ class MemberScreen extends StatefulWidget {
 class _MemberScreenState extends State<MemberScreen> {
   List membersArray = [];
   bool isLoading = true;
+  bool isReady = false;
   @override
   void initState() {
     super.initState();
     this.fetchMembers(widget.groupName);
+    this.checkSwiping(widget.groupName);
   }
 
   fetchMembers(groupName) async {
@@ -50,12 +54,28 @@ class _MemberScreenState extends State<MemberScreen> {
     }
   }
 
+  checkSwiping(groupName) async {
+    setState(() {
+      isReady = false;
+    });
+    var url = "http://localhost:3000/groups/$groupName";
+    var response = await http.get(url);
 
+    if (response.statusCode == 200) {
+      var item = json.decode(response.body);
+      if (item["is_started"] == true) {
+        setState(() {
+          isReady = true;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Picnic Waiting Room'), actions: <Widget>[
+      appBar:
+          AppBar(title: const Text('Picnic Waiting Room'), actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.home),
           onPressed: () {
@@ -91,7 +111,7 @@ class _MemberScreenState extends State<MemberScreen> {
                     color: Colors.black54),
               ),
               Text(
-                  widget.hostName,
+                widget.hostName,
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.white,
@@ -132,6 +152,10 @@ class _MemberScreenState extends State<MemberScreen> {
               // SizedBox(
               //   height: 40,
               // ),
+              isReadyButton(),
+              SizedBox(
+                height: 40,
+              ),
               Text(
                 "Refresh List",
                 style: TextStyle(
@@ -172,6 +196,27 @@ class _MemberScreenState extends State<MemberScreen> {
         ),
       ),
     );
+  }
+
+  Widget isReadyButton() {
+    if (isReady == true) {
+      return RaisedButton(
+        onPressed: () {},
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Start Picknicing!',
+            style: TextStyle(fontSize: 25, color: Colors.red[700]),
+          ),
+        ),
+        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      );
+    }
+    else{
+      return SizedBox(height: 15,);
+    }
   }
 
   Widget getBody() {
@@ -231,5 +276,7 @@ class _MemberScreenState extends State<MemberScreen> {
         ),
       ),
     );
+
+    Widget startSwiping() {}
   }
 }

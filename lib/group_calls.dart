@@ -70,3 +70,23 @@ Future<http.Response> fetchCurrentGroup (String groupName, String url) async {
 
   return response;
 }
+
+Future<http.Response> updateGroup (String url, groupName) async {
+
+  Map data = {
+
+    'group_name': groupName
+
+  };
+  //encode Map to JSON
+  var body = json.encode(data);
+
+  var response = await http.patch('http://$url/groups/$groupName',
+      headers: {"Content-Type": "application/json"},
+      body: body
+  );
+  print("${response.statusCode}");
+  print("${response.body}");
+  return response;
+}
+
