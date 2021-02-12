@@ -8,6 +8,8 @@ import 'package:picknic/login_page.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../Constants/strings.dart';
+import 'swiping_screen.dart';
 
 class HostScreen extends StatefulWidget {
   final String text;
@@ -50,23 +52,20 @@ class _HostScreenState extends State<HostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text('Group Created!'),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.home),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return FirstScreen();
-                    },
-                  ),
-                );
-              },
-            )
-          ]
-      ),
+      appBar: AppBar(title: const Text('Group Created!'), actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.home),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return FirstScreen();
+                },
+              ),
+            );
+          },
+        )
+      ]),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -114,12 +113,21 @@ class _HostScreenState extends State<HostScreen> {
                 height: 40,
               ),
               RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  var future = updateGroup(Strings.localHostUrl, widget.text);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SwipeScreen();
+                      },
+                    ),
+                  );
+                },
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Start the Picnic!',
+                    'Start the Picknic!',
                     style: TextStyle(fontSize: 25, color: Colors.red[700]),
                   ),
                 ),
