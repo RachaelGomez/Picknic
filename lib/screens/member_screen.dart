@@ -178,7 +178,7 @@ class _MemberScreenState extends State<MemberScreen> {
                 height: 40,
               ),
               Text(
-                "Refresh List",
+                "Refresh Page",
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -188,7 +188,7 @@ class _MemberScreenState extends State<MemberScreen> {
                 height: 15,
               ),
               RaisedButton(
-                onPressed: () => setState(() => fetchMembers(widget.groupName)),
+                onPressed: () {refreshPage();},
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
