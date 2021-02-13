@@ -118,7 +118,7 @@ class _HostScreenState extends State<HostScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return SwipeScreen();
+                        return SwipeScreen(currentGroup: widget.text);
                       },
                     ),
                   );
