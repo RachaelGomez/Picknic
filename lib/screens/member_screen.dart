@@ -25,7 +25,7 @@ class MemberScreen extends StatefulWidget {
 class _MemberScreenState extends State<MemberScreen> {
   List membersArray = [];
   bool isLoading = true;
-  bool isReady = false;
+  bool isReady = true;
   @override
   void initState() {
     super.initState();
@@ -56,16 +56,21 @@ class _MemberScreenState extends State<MemberScreen> {
 
   checkSwiping(groupName) async {
     setState(() {
-      isReady = false;
+      isReady = true;
     });
     var url = "http://localhost:3000/groups/$groupName";
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
       var item = json.decode(response.body);
+      print(item);
       if (item["is_started"] == true) {
         setState(() {
           isReady = true;
+        });
+      } else {
+        setState(() {
+          isReady = false;
         });
       }
     }
@@ -152,7 +157,23 @@ class _MemberScreenState extends State<MemberScreen> {
               // SizedBox(
               //   height: 40,
               // ),
-              isReadyButton(),
+              Visibility(
+                visible: isReady,
+                child: RaisedButton(
+                  onPressed: () {},
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Start Picknicing!',
+                      style: TextStyle(fontSize: 25, color: Colors.red[700]),
+                    ),
+                  ),
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40)),
+                ),
+              ),
               SizedBox(
                 height: 40,
               ),
@@ -198,25 +219,28 @@ class _MemberScreenState extends State<MemberScreen> {
     );
   }
 
-  Widget isReadyButton() {
-    if (isReady == true) {
-      return RaisedButton(
-        onPressed: () {},
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Start Picknicing!',
-            style: TextStyle(fontSize: 25, color: Colors.red[700]),
-          ),
-        ),
-        elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      );
-    }
-    else{
-      return SizedBox(height: 15,);
-    }
+  // Widget isReadyButton() {
+  //   return Visibility(
+  //     visible: _isReady,
+  //     child: RaisedButton(
+  //       onPressed: () {},
+  //       color: Colors.white,
+  //       child: Padding(
+  //         padding: const EdgeInsets.all(8.0),
+  //         child: Text(
+  //           'Start Picknicing!',
+  //           style: TextStyle(fontSize: 25, color: Colors.red[700]),
+  //         ),
+  //       ),
+  //       elevation: 5,
+  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+  //     ),
+  //   );
+  // }
+
+  Widget refreshPage() {
+    setState(() => fetchMembers(widget.groupName));
+    setState(() => checkSwiping(widget.groupName));
   }
 
   Widget getBody() {
