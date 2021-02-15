@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:picknic/first_screen.dart';
+import '../restaurant_calls.dart';
 
 class SummaryScreen extends StatefulWidget {
   final String groupName;
@@ -61,6 +62,11 @@ class _SummaryScreenState extends State<SummaryScreen> {
     } else {
       winner = [];
     }
+  }
+  
+  String idToName(id){
+    Future<http.Response> restaurantId = fetchRestaurantList();
+
   }
 
   @override
