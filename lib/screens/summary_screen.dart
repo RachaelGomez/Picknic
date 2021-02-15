@@ -1,86 +1,72 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../group_calls.dart';
-import 'package:picknic/sign_in.dart';
-import 'package:picknic/group_calls.dart';
-import '../first_screen.dart';
-import 'package:picknic/first_screen.dart';
-import 'package:picknic/login_page.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:picknic/group_calls.dart';
+import 'package:picknic/first_screen.dart';
 
-class MemberScreen extends StatefulWidget {
+class SummaryScreen extends StatefulWidget {
   final String groupName;
-  final String hostName;
 
-  final Future<http.Response> futureUpdate;
-  const MemberScreen(
-      {Key key, this.groupName, this.hostName, this.futureUpdate})
+  const SummaryScreen(
+      {Key key, this.groupName })
       : super(key: key);
   @override
-  _MemberScreenState createState() => _MemberScreenState();
+  _SummaryScreenState createState() => _SummaryScreenState();
 }
 
-class _MemberScreenState extends State<MemberScreen> {
-  List membersArray = [];
+class _SummaryScreenState extends State<SummaryScreen> {
+  Map votesArray = {};
   bool isLoading = true;
-  bool isReady = true;
+  List winner = [];
+
   @override
   void initState() {
     super.initState();
-    this.fetchMembers(widget.groupName);
-    this.checkSwiping(widget.groupName);
+    this.fetchVotes(widget.groupName);
+    this.fetchWinner(widget.groupName);
   }
 
-  fetchMembers(groupName) async {
+  fetchVotes(groupName) async {
     setState(() {
       isLoading = true;
     });
-    await widget.futureUpdate;
-    var url = "http://localhost:3000/groups/$groupName/members";
+    // await widget.futureUpdate;
+    var url = "http://localhost:3000/groups/$groupName/total_votes";
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
       var items = json.decode(response.body);
       setState(() {
-        membersArray = items;
+        votesArray = items;
         isLoading = false;
-        print(membersArray);
+        print(votesArray);
       });
     } else {
-      membersArray = [];
+      votesArray = {};
       isLoading = false;
     }
   }
 
-  checkSwiping(groupName) async {
-    setState(() {
-      isReady = true;
-    });
-    var url = "http://localhost:3000/groups/$groupName";
+  fetchWinner(groupName) async {
+    // await widget.futureUpdate;
+    var url = "http://localhost:3000/groups/$groupName/winner";
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
       var item = json.decode(response.body);
-      print(item);
-      if (item["is_started"] == true) {
-        setState(() {
-          isReady = true;
-        });
-      } else {
-        setState(() {
-          isReady = false;
-        });
-      }
+      setState(() {
+        winner = item;
+      });
+    } else {
+      winner = [];
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: const Text('Picnic Waiting Room'), actions: <Widget>[
+      appBar: AppBar(title: const Text('Votes Are In!'), actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.home),
           onPressed: () {
@@ -109,37 +95,37 @@ class _MemberScreenState extends State<MemberScreen> {
             children: <Widget>[
               SizedBox(height: 40),
               Text(
-                'Host',
+                'and the winner is...',
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Colors.black54),
               ),
               Text(
-                widget.hostName,
+                "'${winner[0].toString()} with ${winner[1].toString()} votes!",
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
-              Text(
-                'GROUP CODE',
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54),
-              ),
-              Text(
-                widget.groupName,
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 40,
-              ),
+              // Text(
+              //   'GROUP CODE',
+              //   style: TextStyle(
+              //       fontSize: 15,
+              //       fontWeight: FontWeight.bold,
+              //       color: Colors.black54),
+              // ),
+              // Text(
+              //   widget.groupName,
+              //   style: TextStyle(
+              //       fontSize: 25,
+              //       color: Colors.white,
+              //       fontWeight: FontWeight.bold),
+              // ),
+              // SizedBox(
+              //   height: 40,
+              // ),
               // RaisedButton(
               //   onPressed: () {},
               //   color: Colors.white,
@@ -157,23 +143,23 @@ class _MemberScreenState extends State<MemberScreen> {
               // SizedBox(
               //   height: 40,
               // ),
-              Visibility(
-                visible: isReady,
-                child: RaisedButton(
-                  onPressed: () {},
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Start Picknicing!',
-                      style: TextStyle(fontSize: 25, color: Colors.red[700]),
-                    ),
-                  ),
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)),
-                ),
-              ),
+              // Visibility(
+              //   visible: isReady,
+              //   child: RaisedButton(
+              //     onPressed: () {},
+              //     color: Colors.white,
+              //     child: Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: Text(
+              //         'Start Picknicing!',
+              //         style: TextStyle(fontSize: 25, color: Colors.red[700]),
+              //       ),
+              //     ),
+              //     elevation: 5,
+              //     shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(40)),
+              //   ),
+              // ),
               SizedBox(
                 height: 40,
               ),
@@ -188,7 +174,9 @@ class _MemberScreenState extends State<MemberScreen> {
                 height: 15,
               ),
               RaisedButton(
-                onPressed: () {refreshPage();},
+                onPressed: () {
+                  refreshPage();
+                },
                 color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -202,7 +190,7 @@ class _MemberScreenState extends State<MemberScreen> {
                 height: 20,
               ),
               Text(
-                'Members',
+                'Votes',
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -239,12 +227,12 @@ class _MemberScreenState extends State<MemberScreen> {
   // }
 
   Widget refreshPage() {
-    setState(() => fetchMembers(widget.groupName));
-    setState(() => checkSwiping(widget.groupName));
+    setState(() => fetchVotes(widget.groupName));
+    setState(() => fetchWinner(widget.groupName));
   }
 
   Widget getBody() {
-    if (membersArray.length == 0 || isLoading) {
+    if (votesArray.length == 0 || isLoading) {
       return Center(
           child: CircularProgressIndicator(
               valueColor: new AlwaysStoppedAnimation(Colors.black)));
@@ -252,16 +240,17 @@ class _MemberScreenState extends State<MemberScreen> {
     // return Center(child: Text(membersArray[0]["name"]));
     return Expanded(
       child: ListView.builder(
-        itemCount: membersArray.length,
+        itemCount: votesArray.length,
         itemBuilder: (context, index) {
-          return getCard(membersArray[index]);
+          String key = votesArray.keys.elementAt(index);
+          return getCard(votesArray[index], key);
         },
       ),
     );
   }
 
-  Widget getCard(item) {
-    var name = item["name"];
+  Widget getCard(item, key) {
+    var restaurant = item;
     return Card(
       elevation: 1.5,
       child: Padding(
@@ -286,13 +275,17 @@ class _MemberScreenState extends State<MemberScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width - 140,
                     child: Text(
-                      name,
+                      key,
                       style: TextStyle(fontSize: 17),
                     ),
                   ),
                   SizedBox(
                     height: 10,
-                  )
+                  ),
+                  Text(
+                    "Votes: ${votesArray[key]}",
+                    style: TextStyle(color: Colors.grey),
+                  ),
                 ],
               ),
             ],

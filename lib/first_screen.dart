@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:picknic/group_calls.dart';
 import 'package:picknic/login_page.dart';
+import 'package:picknic/screens/summary_screen.dart';
 import 'screens/join_group_screen.dart';
 import 'package:picknic/sign_in.dart';
 import 'package:random_string/random_string.dart';
@@ -135,7 +136,29 @@ class FirstScreen extends StatelessWidget {
                 elevation: 5,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40)),
-              )
+              ),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SummaryScreen(groupName: "Z7L3");
+                      },
+                    ),
+                  );
+                },
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'TEST BUTTON',
+                    style: TextStyle(fontSize: 25, color: Colors.red[700]),
+                  ),
+                ),
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40)),
+              ),
             ],
           ),
         ),
