@@ -19,10 +19,12 @@ class _SwipeScreenState extends State<SwipeScreen> {
   List restaurants = [];
   List restaurantIds = [];
 
+
   @override
   void initState() {
     super.initState();
     this.fetchRestaurants(widget.currentGroup);
+    //this.startDownloading();
   }
 
   fetchRestaurants(groupName) async {
@@ -49,6 +51,31 @@ class _SwipeScreenState extends State<SwipeScreen> {
     return restaurantIds;
   }
 
+  // void _addToList(List<dynamic> repoList) {
+  //   if (mounted) {
+  //     setState(() {
+  //       _restaurantDetailsList.add(repoList);
+  //     });
+  //   }
+  // }
+
+  // Future<List<dynamic>> _fetchAndParse(String url) async {
+  //   final response = await http.get(url);
+  //   return json.decode(response.body);
+  // }
+
+  // void startDownloading() async {
+  //   final String url = 'https://api.yelp.com/v3/businesses/';
+  //
+  //   restaurantIds.forEach((restaurant) {
+  //     _fetchAndParse(url + restaurant).then(_addToList).catchError((err) {
+  //       print('There was an error: $err');
+  //     });
+  //   });
+  //   print(_restaurantDetailsList);
+  // }
+
+
 
 
   // fetchRestaurantIds(currentGroup) async {
@@ -65,6 +92,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CardController controller;
     return Scaffold(
       appBar: AppBar(title: const Text('Start Swiping'), actions: <Widget>[
         IconButton(
@@ -78,11 +106,90 @@ class _SwipeScreenState extends State<SwipeScreen> {
               ),
             );
           },
-        )
-      ]
+        ),
+       ]
+      ),
+      body: new Center(
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.6,
+          child: new TinderSwapCard(
+              cardBuilder: (context, index) => Card(
+                child: Text(restaurantIds[index]),
+              ),
+              totalNum: restaurantIds.length,
+              swipeUp: true,
+              swipeDown: true,
+              orientation: AmassOrientation.BOTTOM,
+              stackNum: 3,
+              swipeEdge: 4.0,
+              maxWidth: MediaQuery.of(context).size.width * 0.9,
+              maxHeight: MediaQuery.of(context).size.width * 0.9,
+              minWidth: MediaQuery.of(context).size.width * 0.8,
+              minHeight: MediaQuery.of(context).size.width * 0.8,
+              cardController: controller = CardController(),
+              swipeUpdateCallback:
+                  (DragUpdateDetails details, Alignment align) {
+                if (align.x < 0) {
+                  print("card is swiping left");
+                } else if (align.x > 0) {
+                  print("card is swiping right");
+                }
+              }
+          ),
+        ),
       ),
     );
   }
+
+  // Widget getTinderCard(item) {
+  //   CardController controller;
+  //   return TinderSwapCard(
+  //       cardBuilder: (context, index) => Card(
+  //         child: Text(restaurantIds[index]),
+  //       ),
+  //     totalNum: restaurantIds.length,
+  //     swipeUp: true,
+  //     swipeDown: true,
+  //     orientation: AmassOrientation.BOTTOM,
+  //     stackNum: 3,
+  //     swipeEdge: 4.0,
+  //     maxWidth: MediaQuery.of(context).size.width * 0.9,
+  //     maxHeight: MediaQuery.of(context).size.width * 0.9,
+  //     minWidth: MediaQuery.of(context).size.width * 0.8,
+  //     minHeight: MediaQuery.of(context).size.width * 0.8,
+  //     cardController: controller = CardController(),
+  //     swipeUpdateCallback:
+  //       (DragUpdateDetails details, Alignment align) {
+  //         if (align.x < 0) {
+  //           print("card is swiping left");
+  //         } else if (align.x > 0) {
+  //           print("card is swiping right");
+  //         }
+  //       }
+  //   );
+  // }
+
+  // void _addToList(List<dynamic> repoList) {
+  //   if (mounted) {
+  //     setState(() {
+  //       _restaurantDetailsList.add(repoList);
+  //     });
+  //   }
+  //
+  //   Future<List<dynamic>> _fetchAndParse(String url) async {
+  //     final response = await http.get(url);
+  //     return json.decode(response.body);
+  //   }
+  //
+  //   void startDownloading() {
+  //     final String url = 'https://api.yelp.com/v3/businesses/';
+  //
+  //     restaurants.forEach((restaurant) {
+  //       _fetchAndParse(url + restaurant).then(_addToList).catchError((err) {
+  //         print('There was an error: $err');
+  //       });
+  //     });
+  //   }
 }
 
 
