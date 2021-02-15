@@ -90,3 +90,37 @@ Future<http.Response> updateGroup (String url, groupName) async {
   return response;
 }
 
+Future<http.Response> fetchVotes (String groupName, String url) async {
+
+  Map data = {
+    'group_name': groupName,
+  };
+  //encode Map to JSON
+  var body = json.encode(data);
+
+  var response = await http.get('http://localhost:3000/groups/$groupName/votes',
+    headers: {"Content-Type": "application/json"},
+
+  );
+
+
+  print("${response.statusCode}");
+  print("${response.body}");
+
+  return response;
+}
+
+Future<http.Response> fetchMembers (String groupName, String url) async {
+  var response = await http.get('http://localhost:3000/groups/$groupName/members',
+      headers: {"Content-Type": "application/json"},
+  );
+
+  print("${response.statusCode}");
+  print("${response.body}");
+
+  return response;
+
+}
+
+
+
