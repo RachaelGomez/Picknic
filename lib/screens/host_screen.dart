@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../Constants/strings.dart';
 import 'swiping_screen.dart';
+import 'package:flutter/cupertino.dart';
 
 class HostScreen extends StatefulWidget {
   final String text;
@@ -22,10 +23,15 @@ class HostScreen extends StatefulWidget {
 class _HostScreenState extends State<HostScreen> {
   List membersArray = [];
   bool isLoading = true;
+  List restaurants = [];
+  List restaurantIds = [];
+
   @override
   void initState() {
     super.initState();
     this.fetchMembers(widget.text);
+    this.fetchRestaurants(widget.text);
+    this.fetchRestaurantIds();
   }
 
   fetchMembers(groupName) async {
@@ -47,6 +53,32 @@ class _HostScreenState extends State<HostScreen> {
       membersArray = [];
       isLoading = false;
     }
+  }
+
+  fetchRestaurants(groupName) async {
+    await widget.futureGroup;
+    var url = "http://localhost:3000/groups/$groupName/restaurants";
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      setState(() {
+        restaurants = items;
+        print(restaurants);
+      });
+    } else {
+      restaurants = [];
+    }
+    fetchRestaurantIds();
+  }
+
+  fetchRestaurantIds() async {
+    await widget.futureGroup;
+    for (int i=0; i < restaurants.length; i++) {
+      restaurantIds.add(restaurants[i]['yelp_id']);
+    }
+    print(restaurantIds);
+    return restaurantIds;
   }
 
   @override
@@ -118,7 +150,7 @@ class _HostScreenState extends State<HostScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return SwipeScreen(currentGroup: widget.text);
+                        return SwipeScreen(restaurantIds: restaurantIds);
                       },
                     ),
                   );
