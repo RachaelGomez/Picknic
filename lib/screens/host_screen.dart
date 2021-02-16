@@ -69,11 +69,11 @@ class _HostScreenState extends State<HostScreen> {
     } else {
       restaurants = [];
     }
-    fetchRestaurantIds();
   }
 
   fetchRestaurantIds() async {
     await widget.futureGroup;
+    await fetchRestaurants(widget.text);
     for (int i=0; i < restaurants.length; i++) {
       restaurantIds.add(restaurants[i]['yelp_id']);
     }
@@ -150,7 +150,7 @@ class _HostScreenState extends State<HostScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return SwipeScreen(restaurantIds: restaurantIds);
+                        return SwipeScreen(restaurants: restaurants);
                       },
                     ),
                   );
@@ -271,3 +271,12 @@ class _HostScreenState extends State<HostScreen> {
     );
   }
 }
+
+// ClipRRect(
+// borderRadius: BorderRadius.circular(10.0),
+// child: Image.network(
+// widget.restaurants[index]["image_url"],
+// fit: BoxFit.cover,
+// ),
+// )
+

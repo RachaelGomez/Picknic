@@ -1,8 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-
+import 'package:picknic/Models/business.dart';
 import 'package:picknic/models/restaurant.dart';
+
 
 Future<http.Response> fetchRestaurantList () async {
 
@@ -65,4 +66,3 @@ Future<http.Response> createDetails (yelpId) async {
   print("${response.body}");
   return response;
 }
-
