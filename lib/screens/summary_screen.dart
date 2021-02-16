@@ -69,6 +69,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
     var restaurant = await fetchRestaurant(name);
     return restaurant;
   }
+
   
 
 
@@ -118,57 +119,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
-              // Text(
-              //   'GROUP CODE',
-              //   style: TextStyle(
-              //       fontSize: 15,
-              //       fontWeight: FontWeight.bold,
-              //       color: Colors.black54),
-              // ),
-              // Text(
-              //   widget.groupName,
-              //   style: TextStyle(
-              //       fontSize: 25,
-              //       color: Colors.white,
-              //       fontWeight: FontWeight.bold),
-              // ),
-              // SizedBox(
-              //   height: 40,
-              // ),
-              // RaisedButton(
-              //   onPressed: () {},
-              //   color: Colors.white,
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(8.0),
-              //     child: Text(
-              //       'Start the Picnic!',
-              //       style: TextStyle(fontSize: 25, color: Colors.red[700]),
-              //     ),
-              //   ),
-              //   elevation: 5,
-              //   shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(40)),
-              // ),
-              // SizedBox(
-              //   height: 40,
-              // ),
-              // Visibility(
-              //   visible: isReady,
-              //   child: RaisedButton(
-              //     onPressed: () {},
-              //     color: Colors.white,
-              //     child: Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: Text(
-              //         'Start Picknicing!',
-              //         style: TextStyle(fontSize: 25, color: Colors.red[700]),
-              //       ),
-              //     ),
-              //     elevation: 5,
-              //     shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(40)),
-              //   ),
-              // ),
               SizedBox(
                 height: 40,
               ),
@@ -216,24 +166,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
     );
   }
 
-  // Widget isReadyButton() {
-  //   return Visibility(
-  //     visible: _isReady,
-  //     child: RaisedButton(
-  //       onPressed: () {},
-  //       color: Colors.white,
-  //       child: Padding(
-  //         padding: const EdgeInsets.all(8.0),
-  //         child: Text(
-  //           'Start Picknicing!',
-  //           style: TextStyle(fontSize: 25, color: Colors.red[700]),
-  //         ),
-  //       ),
-  //       elevation: 5,
-  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-  //     ),
-  //   );
-  // }
 
   Widget refreshPage() {
     setState(() => fetchVotes(widget.groupName));

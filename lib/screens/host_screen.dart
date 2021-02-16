@@ -146,7 +146,6 @@ class _HostScreenState extends State<HostScreen> {
               ),
               RaisedButton(
                 onPressed: () {
-                  var future = updateGroup(Strings.localHostUrl, widget.text);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
