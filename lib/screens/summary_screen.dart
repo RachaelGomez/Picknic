@@ -64,10 +64,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
     }
   }
   
-  String idToName(id){
-    Future<http.Response> restaurantId = fetchRestaurantList();
 
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -291,6 +288,27 @@ class _SummaryScreenState extends State<SummaryScreen> {
                   Text(
                     "Votes: ${votesArray[key]}",
                     style: TextStyle(color: Colors.grey),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      var restaurant = fetchRestaurant(key);
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return BusinessScreen(restaurant: restaurant);
+                          },
+                        ),
+                      );
+                    },
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Get Details',
+                        style: TextStyle(fontSize: 25, color: Colors.red[700]),
+
+                      ),
+                    ),
                   ),
                 ],
               ),
