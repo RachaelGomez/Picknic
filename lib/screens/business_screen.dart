@@ -12,7 +12,8 @@ class BusinessScreen extends StatefulWidget {
   final Future<dynamic> restaurant;
   final Future<http.Response> future;
 
-  const BusinessScreen({Key key, this.restaurant, this.future}) : super(key: key);
+  const BusinessScreen({Key key, this.restaurant, this.future})
+      : super(key: key);
   @override
   _BusinessScreenState createState() => _BusinessScreenState();
 }
@@ -53,7 +54,7 @@ class _BusinessScreenState extends State<BusinessScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Votes Are In!'), actions: <Widget>[
+      appBar: AppBar(title: const Text('Business Details'), actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.home),
           onPressed: () {
@@ -76,85 +77,35 @@ class _BusinessScreenState extends State<BusinessScreen> {
           ),
         ),
         child: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                SizedBox(height: 40),
-                Text(
-                  details['name'],
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black54),
-                ),
-                // Text(
-                //   style: TextStyle(
-                //       fontSize: 25,
-                //       color: Colors.white,
-                //       fontWeight: FontWeight.bold),
-                // ),
-                SizedBox(height: 20),
-              ]),
-        ),
-      ),
-    );
-  }
-
-  Widget getBody() {
-    if (details.length == 0 || isLoading) {
-      return Center(
-          child: CircularProgressIndicator(
-              valueColor: new AlwaysStoppedAnimation(Colors.black)));
-    }
-    // return Center(child: Text(membersArray[0]["name"]));
-    return Expanded(
-      child: ListView.builder(
-        itemCount: details.length,
-        itemBuilder: (context, index) {
-          String key = details.keys.elementAt(index);
-          return getCard(details[index], key);
-        },
-      ),
-    );
-  }
-
-  Widget getCard(item, key) {
-    var restaurant = item;
-    return Card(
-      elevation: 1.5,
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: ListTile(
-          title: Row(
-            children: <Widget>[
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(60 / 2),
-                ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          child: Container(
+            height: 500,
+            child: Card(
+              semanticContainer: true,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              elevation: 5,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width - 140,
-                    child: Text(
-                      key,
-                      style: TextStyle(fontSize: 17),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: <Widget>[
+                        Image.network(
+                          details["image_url"],
+                          width: 300,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        )
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  Text(details['name']),
+                  Text(details['price']),
+                  Text(details['phone']),
+                  Text(details['rating'].toString()),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),
