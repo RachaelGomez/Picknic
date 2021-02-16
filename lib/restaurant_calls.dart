@@ -2,36 +2,67 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:picknic/Models/business.dart';
+import 'package:picknic/models/restaurant.dart';
 
-const String API_KEY = '_iDM48sJ0J6NzjPXTGMaFm4wGc3mIWuSyBEtbAZ0IkwFlbwQ_g9mt3l9384Ng41dCpJbsK7-55u8vBvlZgCQb7qPE_xh2LMhatkeoq4cXLCK5KyHHhVOk52UtYcYYHYx';
-const Map<String, String> AUTH_HEADER = {"Authorization": "Bearer $API_KEY"};
 
-// Future<http.Response> fetchRestaurantList (String url, String groupName) async {
-//   Map data = {
-//     'group_name': groupName,
-//   };
-//   //encode Map to JSON
-//   var body = json.encode(data);
-//
-//   var response = await http.get('http://localhost:3000/groups/$groupName',
-//     headers: {"Content-Type": "application/json"},
-//   );
-//
-//
-//   print("${response.statusCode}");
-//   print("${response.body}");
-//
-//   return response;
-// };
+Future<http.Response> fetchRestaurantList () async {
 
-// Future<Business> fetchBusiness(businessId) async {
-//   final response = await http.get('https://api.yelp.com/v3/businesses/' + businessId, headers: AUTH_HEADER);
-//
-//   if (response.statusCode == 200) {
-//     print(Business.fromJson(jsonDecode(response.body)));
-//     return Business.fromJson(jsonDecode(response.body));
-//   } else {
-//     throw Exception('Failed to load business');
-//   }
-//
-// }
+  var response = await http.get('http://localhost:3000/restaurants/',
+    headers: {"Content-Type": "application/json"},
+  );
+
+
+  print("${response.statusCode}");
+  print("${response.body}");
+
+  return response;
+}
+
+Future<String> fetchRestaurant (restaurantName) async {
+  Restaurant list;
+  String link = 'http://localhost:3000/restaurants/restaurant_details?restaurant_name=$restaurantName';
+
+
+
+
+  var response = await http
+      .get(Uri.encodeFull(link), headers: {"Accept": "application/json"});
+  print(response.body);
+
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    print(data);
+    // var rest = data['restaurant'] as List;
+    // print(rest);
+    // list = rest.map<Restaurant>((json) => Restaurant.fromJson(json)).toList();
+    list = Restaurant.fromJson(data);
+    print(list.yelpId);
+  }
+
+
+
+  print("${response.statusCode}");
+  print("${response.body}");
+
+  return list.yelpId;
+}
+
+
+Future<http.Response> createDetails (yelpId) async {
+
+  Map data = {
+    'yelp_id': await yelpId,
+  };
+  //encode Map to JSON
+  var body = json.encode(data);
+
+  var response = await http.post('http://localhost:3000/details',
+      headers: {"Content-Type": "application/json"},
+      body: body
+  );
+
+
+  print("${response.statusCode}");
+  print("${response.body}");
+  return response;
+}
