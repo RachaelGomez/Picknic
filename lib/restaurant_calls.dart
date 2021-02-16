@@ -17,21 +17,25 @@ Future<http.Response> fetchRestaurantList () async {
   return response;
 }
 
-Future<List<Restaurant>> fetchRestaurant (restaurantName) async {
-  List<Restaurant> list;
+Future<String> fetchRestaurant (restaurantName) async {
+  Restaurant list;
+  String link = 'http://localhost:3000/restaurants/restaurant_details?restaurant_name=$restaurantName';
 
 
 
 
-  var response = await http.get('http://localhost:3000/restaurants/restaurant_details?restaurant_name=$restaurantName',
-      headers: {"Content-Type": "application/json"},
-  );
+  var response = await http
+      .get(Uri.encodeFull(link), headers: {"Accept": "application/json"});
+  print(response.body);
 
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
-    var rest = data["restaurant"] as List;
-    print(rest);
-    list = rest.map<Restaurant>((json) => Restaurant.fromJson(json)).toList();
+    print(data);
+    // var rest = data['restaurant'] as List;
+    // print(rest);
+    // list = rest.map<Restaurant>((json) => Restaurant.fromJson(json)).toList();
+    list = Restaurant.fromJson(data);
+    print(list.yelpId);
   }
 
 
@@ -39,11 +43,7 @@ Future<List<Restaurant>> fetchRestaurant (restaurantName) async {
   print("${response.statusCode}");
   print("${response.body}");
 
-  return list;
+  return list.yelpId;
 }
 
-String getYelpId(restaurantName) {
-  Future<http.Response> details = fetchRestaurant(restaurantName);
-  String yelpId = details["yelp_id"]
-}
 

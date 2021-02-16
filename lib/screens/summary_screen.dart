@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:picknic/first_screen.dart';
 import '../restaurant_calls.dart';
+import 'business_screen.dart';
 
 class SummaryScreen extends StatefulWidget {
   final String groupName;
@@ -62,6 +63,11 @@ class _SummaryScreenState extends State<SummaryScreen> {
     } else {
       winner = [];
     }
+  }
+
+  getRestaurant(name) async {
+    var restaurant = await fetchRestaurant(name);
+    return restaurant;
   }
   
 
@@ -291,7 +297,8 @@ class _SummaryScreenState extends State<SummaryScreen> {
                   ),
                   RaisedButton(
                     onPressed: () {
-                      var restaurant = fetchRestaurant(key);
+                      var restaurant = getRestaurant(key);
+                      print(restaurant);
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) {

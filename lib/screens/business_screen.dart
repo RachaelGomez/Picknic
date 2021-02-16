@@ -9,7 +9,7 @@ import 'swiping_screen.dart';
 import 'package:flutter/cupertino.dart';
 
 class BusinessScreen extends StatefulWidget {
-  final Future<http.Response> restaurant;
+  final Future<dynamic> restaurant;
 
   const BusinessScreen(
       {Key key, this.restaurant })
@@ -24,21 +24,16 @@ class _BusinessScreenState extends State<BusinessScreen> {
   List winner = [];
 
   @override
-
-
-
   void initState() {
     super.initState();
-    this.fetchBusinessDetails(widget.restaurant);
-    this.fetchWinner(widget.groupName);
   }
 
-  fetchVotes(groupName) async {
+  fetchBusinessDetails(yelpId) async {
     setState(() {
       isLoading = true;
     });
     // await widget.futureUpdate;
-    var url = "http://localhost:3000/groups/$groupName/total_votes";
+    var url = "https://api.yelp.com/v3/businesses/$yelpId";
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -70,21 +65,22 @@ class _BusinessScreenState extends State<BusinessScreen> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text('Votes Are In!'), actions: <Widget>[
-    IconButton(
-    icon: const Icon(Icons.home),
-    onPressed: () {
-    Navigator.of(context).push(
-    MaterialPageRoute(
-    builder: (context) {
-    return FirstScreen();
-    },
-    ),
-    );
-    },
-    ),
-    ]),
+          IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return FirstScreen();
+                  },
+                ),
+              );
+            },
+          ),
+        ]));
+  }
+}
