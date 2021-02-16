@@ -47,3 +47,22 @@ Future<String> fetchRestaurant (restaurantName) async {
 }
 
 
+Future<http.Response> createDetails (yelpId) async {
+
+  Map data = {
+    'yelp_id': await yelpId,
+  };
+  //encode Map to JSON
+  var body = json.encode(data);
+
+  var response = await http.post('http://localhost:3000/details',
+      headers: {"Content-Type": "application/json"},
+      body: body
+  );
+
+
+  print("${response.statusCode}");
+  print("${response.body}");
+  return response;
+}
+

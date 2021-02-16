@@ -298,11 +298,12 @@ class _SummaryScreenState extends State<SummaryScreen> {
                   RaisedButton(
                     onPressed: () {
                       var restaurant = getRestaurant(key);
+                      var futureDetail = createDetails(restaurant);
                       print(restaurant);
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) {
-                            return BusinessScreen(restaurant: restaurant);
+                            return BusinessScreen(restaurant: restaurant, future: futureDetail);
                           },
                         ),
                       );
