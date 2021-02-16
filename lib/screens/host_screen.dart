@@ -149,7 +149,7 @@ class _HostScreenState extends State<HostScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return SwipeScreen(restaurants: restaurants);
+                        return SwipeScreen(restaurants: restaurants, groupName: widget.text,);
                       },
                     ),
                   );

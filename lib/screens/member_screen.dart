@@ -9,6 +9,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:picknic/group_calls.dart';
+import 'swiping_screen.dart';
 
 class MemberScreen extends StatefulWidget {
   final String groupName;
@@ -23,6 +24,7 @@ class MemberScreen extends StatefulWidget {
 }
 
 class _MemberScreenState extends State<MemberScreen> {
+  List restaurants = [];
   List membersArray = [];
   bool isLoading = true;
   bool isReady = true;
@@ -31,6 +33,7 @@ class _MemberScreenState extends State<MemberScreen> {
     super.initState();
     this.fetchMembers(widget.groupName);
     this.checkSwiping(widget.groupName);
+    this.fetchRestaurants(widget.groupName);
   }
 
   fetchMembers(groupName) async {
@@ -73,6 +76,22 @@ class _MemberScreenState extends State<MemberScreen> {
           isReady = false;
         });
       }
+    }
+  }
+
+  fetchRestaurants(groupName) async {
+    await widget.futureUpdate;
+    var url = "http://localhost:3000/groups/$groupName/restaurants";
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      setState(() {
+        restaurants = items;
+        print(restaurants);
+      });
+    } else {
+      restaurants = [];
     }
   }
 
@@ -160,7 +179,13 @@ class _MemberScreenState extends State<MemberScreen> {
               Visibility(
                 visible: isReady,
                 child: RaisedButton(
-                  onPressed: () {},
+                  onPressed: () {Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SwipeScreen(restaurants: restaurants, groupName: widget.groupName);
+                      },
+                    ),
+                  );},
                   color: Colors.white,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
