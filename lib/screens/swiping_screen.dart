@@ -18,8 +18,7 @@ class SwipeScreen extends StatefulWidget {
 }
 
 class _SwipeScreenState extends State<SwipeScreen> {
-  static const String API_KEY = '_iDM48sJ0J6NzjPXTGMaFm4wGc3mIWuSyBEtbAZ0IkwFlbwQ_g9mt3l9384Ng41dCpJbsK7-55u8vBvlZgCQb7qPE_xh2LMhatkeoq4cXLCK5KyHHhVOk52UtYcYYHYx';
-  static const Map<String, String> AUTH_HEADER = {"Authorization": "Bearer $API_KEY"};
+  int cardIndex = 0;
 
   @override
   void initState() {
@@ -129,9 +128,15 @@ class _SwipeScreenState extends State<SwipeScreen> {
                 if (orientation == CardSwipeOrientation.LEFT) {
                   print("card is swiping left");
                   createVote(uid, widget.restaurants[index]["id"], false, 'localhost:3000');
+                  setState(() {
+                    cardIndex += 1;
+                  });
                 } else if (orientation == CardSwipeOrientation.RIGHT) {
                   print("card is swiping right");
                   createVote(uid, widget.restaurants[index]["id"], true, 'localhost:3000');
+                  setState(() {
+                    cardIndex += 1;
+                  });
                 }
               }
           ),
