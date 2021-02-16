@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'swiping_screen.dart';
 import 'package:flutter/cupertino.dart';
+import '../group_calls.dart';
+import '../Constants/strings.dart';
 
 class HostScreen extends StatefulWidget {
   final String text;
@@ -142,6 +144,7 @@ class _HostScreenState extends State<HostScreen> {
               ),
               RaisedButton(
                 onPressed: () {
+                  var future = updateGroup(Strings.localHostUrl, widget.text);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {

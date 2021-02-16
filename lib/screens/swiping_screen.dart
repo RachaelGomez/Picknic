@@ -1,12 +1,8 @@
-import 'dart:convert';
-import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tindercard/flutter_tindercard.dart';
 import 'package:picknic/first_screen.dart';
-import 'package:picknic/screens/host_screen.dart';
 import 'package:http/http.dart' as http;
-import 'package:picknic/Models/business.dart';
 import 'package:picknic/screens/summary_screen.dart';
 import 'package:picknic/sign_in.dart';
 import 'package:picknic/votes_methods.dart';
