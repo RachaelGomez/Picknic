@@ -142,7 +142,7 @@ class FirstScreen extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return SummaryScreen(groupName: "Z7L3");
+                        return SummaryScreen(groupName: "IhYD");
                       },
                     ),
                   );

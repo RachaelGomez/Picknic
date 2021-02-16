@@ -4,6 +4,8 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:picknic/first_screen.dart';
+import '../restaurant_calls.dart';
+import 'business_screen.dart';
 
 class SummaryScreen extends StatefulWidget {
   final String groupName;
@@ -62,6 +64,13 @@ class _SummaryScreenState extends State<SummaryScreen> {
       winner = [];
     }
   }
+
+  getRestaurant(name) async {
+    var restaurant = await fetchRestaurant(name);
+    return restaurant;
+  }
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -285,6 +294,29 @@ class _SummaryScreenState extends State<SummaryScreen> {
                   Text(
                     "Votes: ${votesArray[key]}",
                     style: TextStyle(color: Colors.grey),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      var restaurant = getRestaurant(key);
+                      var futureDetail = createDetails(restaurant);
+                      print(restaurant);
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return BusinessScreen(restaurant: restaurant, future: futureDetail);
+                          },
+                        ),
+                      );
+                    },
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Get Details',
+                        style: TextStyle(fontSize: 25, color: Colors.red[700]),
+
+                      ),
+                    ),
                   ),
                 ],
               ),
