@@ -7,6 +7,7 @@ import 'dart:convert';
 import '../Constants/strings.dart';
 import 'swiping_screen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BusinessScreen extends StatefulWidget {
   final Future<dynamic> restaurant;
@@ -51,6 +52,8 @@ class _BusinessScreenState extends State<BusinessScreen> {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,33 +85,94 @@ class _BusinessScreenState extends State<BusinessScreen> {
             child: Card(
               semanticContainer: true,
               clipBehavior: Clip.antiAliasWithSaveLayer,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               elevation: 5,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: <Widget>[
-                        Image.network(
-                          details["image_url"],
-                          width: 300,
-                          height: 200,
-                          fit: BoxFit.cover,
-                        )
-                      ],
+              child: Wrap(
+                children: <Widget> [
+                  ListTile(
+                    title: Text(
+                      details["name"],
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35, color: Colors.red),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                  Text(details['name']),
-                  Text(details['price']),
-                  Text(details['phone']),
-                  Text(details['rating'].toString()),
-                ],
-              ),
+                  Column(
+                    children: <Widget>[
+                      ClipRRect(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8.0),
+                            topRight: Radius.circular(8.0),
+                            bottomLeft: Radius.circular(8.0),
+                            bottomRight: Radius.circular(8.0)
+                        ),
+                        child: Image.network(
+                          details["image_url"],
+                          width: double.infinity,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget> [
+                          Column(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                      "Rating: ${details["rating"]}"
+                                  ),
+                                  Icon(Icons.star),
+                                  SizedBox(
+                                      height: 20
+                                  ),
+
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    "Categories:",
+                                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)
+                                  ),
+                                  for (var category in details["categories"]) Text(category["title"])
+                                ],
+                              )
+                            ]
+                          ),
+                          Column(
+                            children: <Widget> [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget> [
+                                  Icon(Icons.location_on_sharp),
+                                  Text("${details["address_1"]} ${details["city"]}, ${details["state"]} ${details["zip_code"]}")
+                          ]
+                              ),
+
+                            ],
+                          )
+                        ],
+                      ),
+                      ],
+                  ),
+                    ],
+                  ),
+              )
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
+    }
+
+
 }
