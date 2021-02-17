@@ -158,6 +158,17 @@ class _BusinessScreenState extends State<BusinessScreen> {
                                   Text("${details["address_1"]} ${details["city"]}, ${details["state"]} ${details["zip_code"]}")
                           ]
                               ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              InkWell(
+                                child: Text("See business on Yelp", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blue)),
+                                onTap: () async {
+                                  if (await canLaunch(details["url"])) {
+                                    await launch(details["url"]);
+                                  }
+                                }
+                              )
 
                             ],
                           )
