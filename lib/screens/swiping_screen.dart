@@ -60,14 +60,14 @@ class _SwipeScreenState extends State<SwipeScreen> {
             ),
           );
         },
-        color: Colors.red[700],
+        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
             'Stop Voting',
             style: TextStyle(
                 fontSize: 25,
-                color: Colors.white),
+                color: Colors.red[700]),
           ),
         ),
         elevation: 5,
@@ -78,6 +78,13 @@ class _SwipeScreenState extends State<SwipeScreen> {
       body: new Center(
         heightFactor: MediaQuery.of(context).size.height,
         child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [Colors.red[800], Colors.deepOrange[400]],
+            ),
+          ),
           child: new TinderSwapCard(
               cardBuilder: (context, index) => Container(
                     height: double.infinity,
