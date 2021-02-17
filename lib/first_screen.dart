@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picknic/group_calls.dart';
 import 'package:picknic/login_page.dart';
-import 'package:picknic/screens/summary_screen.dart';
 import 'screens/join_group_screen.dart';
 import 'package:picknic/sign_in.dart';
 import 'package:random_string/random_string.dart';
@@ -18,7 +17,7 @@ class FirstScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.red[800], Colors.red[400]],
+            colors: [Colors.red[800], Colors.deepOrange[500]],
           ),
         ),
         child: Center(
@@ -130,28 +129,6 @@ class FirstScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'Sign Out',
-                    style: TextStyle(fontSize: 25, color: Colors.red[700]),
-                  ),
-                ),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40)),
-              ),
-              RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return SummaryScreen(groupName: "09aX");
-                      },
-                    ),
-                  );
-                },
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'TEST BUTTON',
                     style: TextStyle(fontSize: 25, color: Colors.red[700]),
                   ),
                 ),

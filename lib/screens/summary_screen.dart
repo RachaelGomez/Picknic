@@ -45,12 +45,16 @@ class _SummaryScreenState extends State<SummaryScreen> {
         print(votesArray);
       });
     } else {
-      votesArray = {};
-      isLoading = false;
+      setState(() {
+        votesArray = {};
+        isLoading = false;
+      });
+
     }
   }
 
   fetchWinner(groupName) async {
+
     // await widget.futureUpdate;
     var url = "http://localhost:3000/groups/$groupName/winner";
     var response = await http.get(url);
@@ -69,6 +73,10 @@ class _SummaryScreenState extends State<SummaryScreen> {
     var restaurant = await fetchRestaurant(name);
     return restaurant;
   }
+
+  // awaitWinner() {
+  //   winner = await winner
+  // }
 
   
 
@@ -95,7 +103,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.red[800], Colors.red[400]],
+            colors: [Colors.red[800], Colors.deepOrange[400]],
           ),
         ),
         child: Center(
@@ -104,6 +112,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               SizedBox(height: 40),
+
               Text(
                 'and the winner is...',
                 style: TextStyle(
@@ -111,13 +120,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     fontWeight: FontWeight.bold,
                     color: Colors.black54),
               ),
-              Text(
-                "'${winner[0].toString()} with ${winner[1].toString()} votes!",
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
+              getWinner(),
               SizedBox(height: 20),
               SizedBox(
                 height: 40,
@@ -168,8 +171,24 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
 
   Widget refreshPage() {
-    setState(() => fetchVotes(widget.groupName));
-    setState(() => fetchWinner(widget.groupName));
+    fetchVotes(widget.groupName);
+    fetchWinner(widget.groupName);
+  }
+
+  Widget getWinner() {
+    print(winner);
+    if (winner == null || winner.length == 0) {
+      return Text('Counting the Votes!');
+    } else {
+      return Text(
+      "'${winner[0].toString()} with ${winner[1].toString()} votes!",
+      style: TextStyle(
+          fontSize: 25,
+          color: Colors.white,
+          fontWeight: FontWeight.bold),
+    );
+
+    }
   }
 
   Widget getBody() {

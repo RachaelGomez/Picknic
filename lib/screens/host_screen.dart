@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import '../group_calls.dart';
 import 'package:picknic/sign_in.dart';
-import 'package:picknic/group_calls.dart';
 import '../first_screen.dart';
 import 'package:picknic/first_screen.dart';
-import 'package:picknic/login_page.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../Constants/strings.dart';
 import 'swiping_screen.dart';
 import 'package:flutter/cupertino.dart';
+import '../group_calls.dart';
+import '../Constants/strings.dart';
 
 class HostScreen extends StatefulWidget {
   final String text;
@@ -103,7 +101,7 @@ class _HostScreenState extends State<HostScreen> {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.red[800], Colors.red[400]],
+            colors: [Colors.red[800], Colors.deepOrange[500]],
           ),
         ),
         child: Center(
@@ -146,10 +144,11 @@ class _HostScreenState extends State<HostScreen> {
               ),
               RaisedButton(
                 onPressed: () {
+                  var future = updateGroup(Strings.localHostUrl, widget.text);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return SwipeScreen(restaurants: restaurants);
+                        return SwipeScreen(restaurants: restaurants, groupName: widget.text);
                       },
                     ),
                   );
@@ -271,11 +270,4 @@ class _HostScreenState extends State<HostScreen> {
   }
 }
 
-// ClipRRect(
-// borderRadius: BorderRadius.circular(10.0),
-// child: Image.network(
-// widget.restaurants[index]["image_url"],
-// fit: BoxFit.cover,
-// ),
-// )
 
