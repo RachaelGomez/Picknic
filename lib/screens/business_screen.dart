@@ -117,66 +117,127 @@ class _BusinessScreenState extends State<BusinessScreen> {
                       SizedBox(
                         height: 30,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      InkWell(
+                          child: Text("See business on Yelp", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blue)),
+                          onTap: () async {
+                            if (await canLaunch(details["url"])) {
+                              await launch(details["url"]);
+                            }
+                          }
+                      ),
+                      SizedBox(height: 20),
+                      Column(
                         children: <Widget> [
-                          Column(
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Text(
-                                      "Rating: ${details["rating"]}"
-                                  ),
-                                  Icon(Icons.star),
-                                  SizedBox(
-                                      height: 20
-                                  ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget> [
+                              Column(
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                            "Rating: ${details["rating"]}"
+                                        ),
+                                        Icon(Icons.star),
+                                        SizedBox(
+                                            height: 20
+                                        ),
 
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20
+                                      ],
+                                    ),
+                                    SizedBox(
+                                        height: 20
+                                    ),
+                                    Column(
+                                      children: <Widget>[
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text(
+                                            "Categories:",
+                                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)
+                                        ),
+                                        for (var category in details["categories"]) Text(category["title"]),
+                                      ],
+                                    )
+                                  ]
                               ),
                               Column(
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "Categories:",
-                                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)
-                                  ),
-                                  for (var category in details["categories"]) Text(category["title"])
-                                ],
-                              )
-                            ]
-                          ),
-                          Column(
-                            children: <Widget> [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget> [
-                                  Icon(Icons.location_on_sharp),
-                                  Text("${details["address_1"]} ${details["city"]}, ${details["state"]} ${details["zip_code"]}")
-                          ]
-                              ),
-                              SizedBox(
-                                height: 60,
-                              ),
-                              InkWell(
-                                child: Text("See business on Yelp", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blue)),
-                                onTap: () async {
-                                  if (await canLaunch(details["url"])) {
-                                    await launch(details["url"]);
-                                  }
-                                }
-                              )
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget> [
+                                        Icon(Icons.location_on_sharp),
+                                        Text("${details["address_1"]} ${details["city"]}, ${details["state"]} ${details["zip_code"]}")
+                                      ]
+                                  ),
+                                  SizedBox(
+                                      height: 40
+                                  ),
+                                  Text("Dining Options:", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                                  for (var option in details["transactions"]) Text(option),
 
+                                ],
+                              ),
                             ],
-                          )
+                          ),
                         ],
-                      ),
+                      )
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: <Widget> [
+                      //     Column(
+                      //       children: <Widget>[
+                      //         Row(
+                      //           children: <Widget>[
+                      //             Text(
+                      //                 "Rating: ${details["rating"]}"
+                      //             ),
+                      //             Icon(Icons.star),
+                      //             SizedBox(
+                      //                 height: 20
+                      //             ),
+                      //
+                      //           ],
+                      //         ),
+                      //         SizedBox(
+                      //           height: 20
+                      //         ),
+                      //         Column(
+                      //           children: <Widget>[
+                      //             SizedBox(
+                      //               height: 20,
+                      //             ),
+                      //             Text(
+                      //               "Categories:",
+                      //                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)
+                      //             ),
+                      //             for (var category in details["categories"]) Text(category["title"]),
+                      //           ],
+                      //         )
+                      //       ]
+                      //     ),
+                      //     Column(
+                      //       children: <Widget> [
+                      //         Row(
+                      //           mainAxisAlignment: MainAxisAlignment.center,
+                      //           children: <Widget> [
+                      //             Icon(Icons.location_on_sharp),
+                      //             Text("${details["address_1"]} ${details["city"]}, ${details["state"]} ${details["zip_code"]}")
+                      //     ]
+                      //         ),
+                      //         SizedBox(
+                      //           height: 40
+                      //         ),
+                      //         Text("Dining Options:", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                      //         for (var option in details["transactions"]) Text(option),
+                      //
+                      //       ],
+                      //     ),
+                      //   ],
+                      // ),
                       ],
                   ),
                     ],
