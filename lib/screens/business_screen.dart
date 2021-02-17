@@ -115,7 +115,7 @@ class _BusinessScreenState extends State<BusinessScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 30,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -140,6 +140,9 @@ class _BusinessScreenState extends State<BusinessScreen> {
                               ),
                               Column(
                                 children: <Widget>[
+                                  SizedBox(
+                                    height: 20,
+                                  ),
                                   Text(
                                     "Categories:",
                                       style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)
@@ -159,7 +162,7 @@ class _BusinessScreenState extends State<BusinessScreen> {
                           ]
                               ),
                               SizedBox(
-                                height: 40,
+                                height: 60,
                               ),
                               InkWell(
                                 child: Text("See business on Yelp", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.blue)),
