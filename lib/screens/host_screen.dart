@@ -99,9 +99,9 @@ class _HostScreenState extends State<HostScreen> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.red[800], Colors.red[400]],
+            // begin: Alignment.topRight,
+            // end: Alignment.bottomLeft,
+            colors: [Colors.red[800], Colors.deepOrange[500]],
           ),
         ),
         child: Center(

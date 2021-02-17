@@ -118,7 +118,7 @@ class _MemberScreenState extends State<MemberScreen> {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.red[800], Colors.red[400]],
+            colors: [Colors.red[800], Colors.deepOrange[500]],
           ),
         ),
         child: Center(

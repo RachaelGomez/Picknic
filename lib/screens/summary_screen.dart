@@ -103,7 +103,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.red[800], Colors.red[400]],
+            colors: [Colors.red[800], Colors.deepOrange[400]],
           ),
         ),
         child: Center(
