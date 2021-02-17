@@ -11,3 +11,6 @@ Ada Capstone Project - India Kato and Rachael Gomez
 * xCode
 * Android Studio
 * iOS Simulator
+
+## Backend Ruby on Rails Github Repository
+https://github.com/RachaelGomez/picknic_backend
